@@ -11,24 +11,6 @@ provider "aws" {
 }
 
 ## 
-# Variables
-variable "number_of_servers" {
-    type = number
-}
-
-variable "first_script" {
-    type = string
-}
-
-variable "bucket_name" {
-    type = string
-}
-
-variable "index_document_to_be_deployed" {
-    type = string
-}
-
-## 
 # Instances
 resource "aws_instance" "ec2" {
     ami = "ami-032598fcc7e9d1c7a"
@@ -38,7 +20,7 @@ resource "aws_instance" "ec2" {
     user_data = file(var.first_script)
 
     tags = {
-        Name = "Web Server"
+        Name = var.server_name
     }
 }
 
@@ -58,5 +40,5 @@ module "staticwebsite" {
 
 
 # Commands to test
-#terraform plan -var-file=./../variables/development.tfvars
-#terraform plan -var-file=./../variables/staging.tfvars
+#terraform plan -var-file=./../envvars/development.tfvars
+#terraform plan -var-file=./../envvars/staging.tfvars

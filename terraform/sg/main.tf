@@ -1,16 +1,5 @@
-variable "ingress" {
-  type = list(number)
-  default = [80,443]
-}
-
-variable "egress" {
-  type = list(number)
-  default = [80,443]
-}
-
-output "sg_name" {
-  value = aws_security_group.web_traffic.name
-}
+##
+# Resources
 
 resource "aws_security_group" "web_traffic" {
   name = "Allow Web Traffic"
