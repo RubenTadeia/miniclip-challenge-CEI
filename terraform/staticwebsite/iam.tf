@@ -1,3 +1,5 @@
+##
+# Data
 # .deploy/terraform/static-site/iam.tf
 data "aws_iam_policy_document" "website_policy" {
   statement {
@@ -9,7 +11,7 @@ data "aws_iam_policy_document" "website_policy" {
       type = "AWS"
     }
     resources = [
-      "arn:aws:s3:::${module.variables.var.bucket_name}/*"
+      "arn:aws:s3:::${var.bucket_name}/*"
     ]
   }
 }

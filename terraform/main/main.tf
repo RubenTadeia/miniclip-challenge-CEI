@@ -1,3 +1,5 @@
+## 
+# Provider
 provider "aws" {
     region = "eu-west-2"
     default_tags {
@@ -8,63 +10,51 @@ provider "aws" {
     }
 }
 
+## 
+# Variables
+variable "number_of_servers" {
+    type = number
+}
+
+variable "first_script" {
+    type = string
+}
+
+variable "bucket_name" {
+    type = string
+}
+
+variable "index_document_to_be_deployed" {
+    type = string
+}
+
+## 
+# Instances
 resource "aws_instance" "ec2" {
     ami = "ami-032598fcc7e9d1c7a"
     instance_type = "t2.micro"
-    count = module.variables.number_of_servers
-    security_groups = [aws_security_group.web_traffic.name]
-    user_data = file(module.variables.first_script)
+    count = var.number_of_servers
+    security_groups = [module.sg.sg_name]
+    user_data = file(var.first_script)
 
     tags = {
         Name = "Web Server"
     }
 }
 
-variable "ingress" {
-    type = list(number)
-    default = [80,443]
-}
-
-variable "egress" {
-    type = list(number)
-    default = [80,443]
-}
-
-resource "aws_security_group" "web_traffic" {
-    name = "Allow Web Traffic"
-
-    dynamic "ingress" {
-        iterator = port
-        for_each = var.ingress
-        content {
-            from_port = port.value
-            to_port = port. value
-            protocol = "TCP"
-            cidr_blocks = ["0.0.0.0/0"]
-        }
-    }
-
-        dynamic "egress" {
-        iterator = port
-        for_each = var.egress
-        content {
-            from_port = port.value
-            to_port = port. value
-            protocol = "TCP"
-            cidr_blocks = ["0.0.0.0/0"]
-        }
-    }
-}
-
+##
 # Modules
-module "variables" {
-    source = "./../variables"
+# Creating the security group's module
+module "sg" {
+    source = "./../sg"
 }
 
 # Creating the website's module
-/*module "staticwebsite" {
+module "staticwebsite" {
     source = "./../staticwebsite"
-}*/
+    bucket_name = var.bucket_name
+    index_document_to_be_deployed = var.index_document_to_be_deployed
+}
 
 
 # Commands to test
