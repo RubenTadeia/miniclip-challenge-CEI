@@ -25,11 +25,7 @@ module "staticwebsite" {
     source = "./../staticwebsite"
     bucket_name = var.bucket_name
     index_document_to_be_deployed = var.index_document_to_be_deployed
-}
-
-
-output "PublicIP" {
-    value = module.web.pub_ip
+    error_file_to_be_deployed = var.error_file_to_be_deployed
 }
 
 # Commands to test

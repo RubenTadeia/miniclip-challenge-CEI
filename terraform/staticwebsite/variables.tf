@@ -8,3 +8,7 @@ variable "bucket_name" {
 variable "index_document_to_be_deployed" {
     type = string
 }
+
+variable "error_file_to_be_deployed" {
+    type = string
+}
