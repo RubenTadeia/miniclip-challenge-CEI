@@ -3,17 +3,22 @@
 
 # Creating the S3 Bucket
 
+resource "aws_s3_bucket" "buck" {
+  bucket = var.bucket_name
+
+  tags = {
+    Name        = var.bucket_name
+    Environment = var.environment_name
+  }
+}
+
 resource "aws_s3_bucket_acl" "bucket" {
-    bucket = var.bucket_name
+    bucket = aws_s3_bucket.buck.id
     acl = "private"
 }
 
 resource "aws_s3_bucket_website_configuration" "bucketwebsite" {
     bucket = var.bucket_name
-    
-    // In older version of aws_s3_bucket
-    //acl = "public-read"
-    //policy = data.aws_iam_policy_document.website_policy.json
 
     index_document {
     suffix = "index.html"
@@ -31,7 +36,7 @@ resource "aws_s3_bucket_website_configuration" "bucketwebsite" {
         replace_key_prefix_with = "documents/"
       }
     }
-
+    depends_on = [aws_s3_bucket.buck]
 }
 
 # Now lets upload the files to the bucket

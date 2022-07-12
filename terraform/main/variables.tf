@@ -1,6 +1,10 @@
 ## 
 # Variables
 
+variable "environment_name" {
+    type = string
+}
+
 variable "server_name" {
     type = string
 }
@@ -22,5 +26,9 @@ variable "index_document_to_be_deployed" {
 }
 
 variable "error_file_to_be_deployed" {
+    type = string
+}
+
+variable "loadbalancer_name" {
     type = string
 }
