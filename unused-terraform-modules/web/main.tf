@@ -4,7 +4,7 @@
 ## 
 # Instances
 resource "aws_instance" "web" {
-    ami = "ami-032598fcc7e9d1c7a"
+    ami = var.ami_name
     instance_type = "t2.micro"
     security_groups = [module.sg.sg_name]
     user_data = file(var.first_script)
@@ -14,6 +14,7 @@ resource "aws_instance" "web" {
     }
 }
 
+# This module  became deprecated after using Auto Scaling Groups
 module "eip" {
     source = "./../eip"
     instance_id = aws_instance.web.id
