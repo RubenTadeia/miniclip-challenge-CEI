@@ -1,0 +1,13 @@
+environment_name = "development"
+ami_name = "ami-032598fcc7e9d1c7a"
+server_name = "Web Server DEV"
+//number_of_servers = 1
+bucket_name = "miniclip-dev"
+index_document_to_be_deployed = "./../staticwebsite/html/dev/index.html"
+error_file_to_be_deployed = "./../staticwebsite/html/error.html"
+first_script  = "./../scripts/dev-server-script.sh"
+loadbalancer_name = "lb-dev"
+auto_scaling_group_name = "terraform-asg-dev"
+auto_scaling_group_min_inst = 2
+auto_scaling_group_max_inst = 3
+availability_zone = ["eu-west-1","eu-west-2"]
